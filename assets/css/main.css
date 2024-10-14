@@ -1,0 +1,51 @@
+body{
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100vh;
+}
+main{
+    height: 100%;
+}
+#to-do {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 70%;
+}
+
+#to-do form{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 90%;
+}
+
+ #task-list{
+     height: 60%;
+     overflow-x: auto;
+    display: flex;
+     justify-content: center;
+ }
+#task-list > div{
+    max-height: 40%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.delete{
+    width: fit-content;
+}
+input[type="submit"]{
+    width: fit-content;
+    margin: 15px auto;
+}
+
+#form-add-task{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 20%;
+}
