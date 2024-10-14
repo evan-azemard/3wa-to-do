@@ -68,7 +68,7 @@ const loadTasksFromLocalStorage = () => {
 // HTML template
 const HTMLTemplate = (index, title, priority, inProgress, color) => {
 	return `
-    <div class="row mt-1 p-0 ${color} text-light" data-id="${index}" id="task-${index}">
+    <div class="row mt-1 ${color} text-light" data-id="${index}" id="task-${index}">
         <div class="col-6">
             <div class="row">
             <div class="form-group d-flex">
@@ -85,7 +85,7 @@ const HTMLTemplate = (index, title, priority, inProgress, color) => {
             </div>
         </div>
         <div class="col-6">
-            <p class="task-text" id="task-text-${index}" ${!inProgress ? 'class="text-decoration-line-through"' : ''}>${title}</p>
+      		<p class="task-text ${!inProgress ? 'text-decoration-line-through' : ''}" id="task-text-${index}">${title}</p>
         </div>
         <input type="hidden" name="inProgress" value="${inProgress}">
         <input type="hidden" name="priority" value="${priority}">
