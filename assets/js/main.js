@@ -2,10 +2,57 @@ const allDeleteBTN = document.querySelector('input[name="all-delete"]');
 const addTaskForm = document.querySelector('form[name="add-task"]');
 const taskListHTML = document.querySelector('#task-list');
 const inputDescription = document.querySelector('#description');
+const orderSelect = document.querySelector('select[name="order"]');
+const prioritySelect = document.querySelector('select[name="priority"]');
+const taskStatusSelect = document.querySelector('select[name="task"]');
 
 /*
  console.log(addTaskBTN,allDeleteBTN,taskForm,addTaskForm,taskListHTML);
  */
+
+const sortTasks = () => {
+	let sortedTasks = [...tasks];
+
+	switch(prioritySelect.value) {
+	case "heightPriority":
+		sortedTasks = sortedTasks.filter(task => task.priority === 1);
+		break;
+	case "normalPriority":
+		sortedTasks = sortedTasks.filter(task => task.priority === 2);
+		break;
+	case "lowPriority":
+		sortedTasks = sortedTasks.filter(task => task.priority === 3);
+		break;
+	case "allPriority":
+	default:
+		break;
+	}
+	
+	switch(taskStatusSelect.value) {
+	case "inProgress":
+		sortedTasks = sortedTasks.filter(task => task.inProgress);
+		break;
+	case "finished":
+		sortedTasks = sortedTasks.filter(task => !task.inProgress);
+		break;
+	case "all":
+	default:
+		break;
+	}
+
+	switch(orderSelect.value) {
+	case "hightOrder":
+		sortedTasks.sort((a, b) => a.priority - b.priority);
+		break;
+	case "lowOrder":
+		sortedTasks.sort((a, b) => b.priority - a.priority);
+		break;
+	default:
+		break;
+	}
+
+	renderSortedHTML(sortedTasks);
+}
 
 const saveTasksToLocalStorage = () => {
 	localStorage.setItem('tasks', JSON.stringify(tasks));
@@ -65,13 +112,13 @@ let tasks = [
 ];
 
 
-const renderHTML = () => {
+const renderSortedHTML = (sortedTasks) => {
 	taskListHTML.innerHTML = "";
 
 	tasks.sort((a, b) => a.priority - b.priority);
 
 
-	tasks.map((task, index) => {
+	sortedTasks.forEach((task, index) => {
 		let color =   task.priority === 1 ? "bg-danger" : (task.priority === 2 ? "bg-success"   : "bg-primary")
 
 		taskListHTML.innerHTML += HTMLTemplate(index,task.title,task.priority,task.inProgress,color);
@@ -129,8 +176,7 @@ allDeleteBTN.addEventListener("click", (e) => {
 	})
 	tasks = tasks.filter(task => task.inProgress);
 	alert(`${count} tâche(s) supprimée(s)`);
-	saveTasksToLocalStorage();
-
+	renderSortedHTML(tasks);
 });
 
 //Add a new task in tasks
@@ -148,11 +194,16 @@ addTaskForm.addEventListener('submit', (e) => {
 			tasks.push(newTask);
 
 			saveTasksToLocalStorage();
-			renderHTML();
-
+			renderSortedHTML(tasks);
+			inputDescription.value = '';
+			
 		}
 })
 
+orderSelect.addEventListener('change', sortTasks);
+prioritySelect.addEventListener('change', sortTasks);
+taskStatusSelect.addEventListener('change', sortTasks);
 
 loadTasksFromLocalStorage();
-renderHTML();
+
+renderSortedHTML(tasks);
