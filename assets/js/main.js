@@ -6,9 +6,6 @@ const orderSelect = document.querySelector('select[name="order"]');
 const prioritySelect = document.querySelector('select[name="priority"]');
 const taskStatusSelect = document.querySelector('select[name="task"]');
 
-/*
- console.log(addTaskBTN,allDeleteBTN,taskForm,addTaskForm,taskListHTML);
- */
 
 const sortTasks = () => {
 	let sortedTasks = [...tasks];
@@ -128,9 +125,8 @@ const renderSortedHTML = (sortedTasks) => {
 			checkbox.addEventListener('change', (e) => {
 				const taskID = e.target.getAttribute('data-id');
 				const label = document.getElementById(`check-label-${taskID}`)
-				const taskText = document.getElementById(`task-text-${taskID}`); // Sélection du texte à barrer
+				const taskText = document.getElementById(`task-text-${taskID}`);
 
-				console.log(label);
 				tasks[taskID].inProgress = !e.target.checked;
 
 				if (tasks[taskID].inProgress) {
